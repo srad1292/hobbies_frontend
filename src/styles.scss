@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+.error-message {
+    color: red;
+    font-size: small;
+}
+
+nav {
+    margin-bottom: 8px;
+    a {
+        text-decoration: none;
+        margin-right: 6px;
+        border: 1px solid gray;
+        background-color: #ccc;
+        padding: 2px;
+    }
+
+    a:visited {
+        color: black;
+    }
+
+    a:hover {
+        background-color: #888;
+        color: white;
+    }
+}
+
+.results-table{
+    border-collapse: collapse;
+    width: 80%;
+    td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    tr:nth-child(even){background-color: #f2f2f2;}
+
+    tr:hover {background-color: #ddd;}
+
+    th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+      }
+}

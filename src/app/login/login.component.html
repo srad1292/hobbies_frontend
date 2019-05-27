@@ -1,0 +1,15 @@
+<h2>Login</h2>
+
+<div>
+    Username: <input type="text" placeholder="Username" [(ngModel)]="username">
+    Password: <input type="text" placeholder="Password" [(ngModel)]="password">
+    <div *ngIf="error" class="error-message">{{error}}</div>
+</div>
+
+<button (click)="login()">Submit</button>
+
+<div>
+    Do not have an account? <a routerLink="/registration">Sign Up</a> 
+</div>
+
+

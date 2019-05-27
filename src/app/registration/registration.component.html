@@ -1,0 +1,20 @@
+<h2>Registration</h2>
+
+<div>
+  <p>
+    First Name: <input placeholder="First Name" [(ngModel)]="newUser.first_name">
+  </p>
+  <p>
+    Last Name: <input placeholder="Last Name" [(ngModel)]="newUser.last_name">
+  </p>
+  <p>
+    Username: <input placeholder="Username" [(ngModel)]="newUser.uid">
+  </p>
+  <p>
+    Password: <input placeholder="Password" [(ngModel)]="newUser.password">
+  </p>
+
+  <button (click)="submitRegistration()">Register</button>
+</div>
+
+
