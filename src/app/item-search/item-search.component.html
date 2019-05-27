@@ -1,0 +1,32 @@
+<h2>Search for new items!</h2>
+
+<p>Current Item Type: {{searchType}}</p>
+
+<div>
+  Search: <input placeholder="Search" [(ngModel)]="searchValue">
+  <button [disabled]="isSearching" (click)="search()">Search</button>
+  <ng-container *ngIf="isSearching">Searching...</ng-container>
+</div>
+
+<br><br>
+
+<div *ngIf='searchResults'>
+  <h2>Search Results</h2>
+  <table class="results-table">
+    <tr>
+      <th *ngFor='let field of animeFields'>{{field}}</th>
+    </tr>
+
+    <tr *ngFor='let result of searchResults' (click)="goToItemDetails(result)">
+      <td *ngFor='let key of animeFields'>
+        <ng-container *ngIf='key === synopsis; else regularFields'>
+          {{result[key] | slice:0:20 }}
+          <ng-container *ngIf='result[key].length > 20'>...</ng-container>
+        </ng-container>
+
+        <ng-template #regularFields>{{result[key]}}</ng-template>
+
+      </td>
+    </tr>
+  </table>
+</div>

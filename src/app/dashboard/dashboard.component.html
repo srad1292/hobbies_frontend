@@ -1,0 +1,7 @@
+<h2>Welcome To Your Centralized Hobby Ratings</h2>
+
+<p>User ID: {{currentUser?.uid}}</p>
+<p>User First Name: {{currentUser?.first_name}}</p>
+<p>User Last Name: {{currentUser?.last_name}}</p>
+
+<p *ngIf="serviceError">Error: {{error}}</p>
