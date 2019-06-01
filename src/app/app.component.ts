@@ -14,7 +14,8 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Hobby Ratings Hub';
+  title: string = 'Hobby Ratings';
+  userNavExpanded: boolean = true;
   currentUser: User;
 
   constructor(
@@ -27,5 +28,9 @@ export class AppComponent {
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+
+  toggleUserNav() {
+    this.userNavExpanded = !this.userNavExpanded;
   }
 }

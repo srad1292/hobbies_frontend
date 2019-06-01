@@ -1,28 +1,58 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+$grayish: rgba(255,255,255,.5);
+
 /* You can add global styles to this file, and also import other style files */
+footer {
+    color: $grayish;
+}
+
+
 .error-message {
     color: red;
     font-size: small;
 }
 
-nav {
-    margin-bottom: 8px;
-    a {
-        text-decoration: none;
-        margin-right: 6px;
-        border: 1px solid gray;
-        background-color: #ccc;
-        padding: 2px;
-    }
-
-    a:visited {
-        color: black;
-    }
-
-    a:hover {
-        background-color: #888;
-        color: white;
-    }
+.no-bottom {
+    margin-bottom: 1px;
 }
+// nav {
+//     margin-bottom: 8px;
+//     a {
+//         text-decoration: none;
+//         margin-right: 6px;
+//         border: 1px solid gray;
+//         background-color: #ccc;
+//         padding: 2px;
+//     }
+
+//     a:visited {
+//         color: black;
+//     }
+
+//     a:hover {
+//         background-color: #888;
+//         color: white;
+//     }
+// }
+
+//Start Bootstrap overrides
+.dropdown-item {
+    color: black !important;
+}
+
+.dropdown-menu { 
+    right: 0; 
+    left: -6rem;
+    min-width: 14rem;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+//End Bootstrap overrides
 
 .results-table{
     border-collapse: collapse;
@@ -43,4 +73,28 @@ nav {
         background-color: #4CAF50;
         color: white;
       }
+}
+
+//Spacing Rules
+$spacing-directions: top bottom left right;
+$spacing-values: -27 -13 -12 -10 -9 0 4 5 6 7 8 10 12 15 17 20 24 25 30 40 60;
+
+// margin rules
+@each $direction in $spacing-directions {
+	@each $value in $spacing-values {
+		$margin: if($value < 0, "margin-negative","margin-");
+		.#{$direction}-#{$margin}#{$value}{
+			margin-#{$direction}: #{$value}px !important;
+		}
+	}
+}
+
+// padding rules
+@each $direction in $spacing-directions {
+	@each $value in $spacing-values {
+		$margin: if($value < 0, "padding-negative","padding-");
+		.#{$direction}-#{$margin}#{$value}{
+			padding-#{$direction}: #{$value}px !important;
+		}
+	}
 }

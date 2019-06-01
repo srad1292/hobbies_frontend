@@ -21,6 +21,7 @@ import { AnimeService } from './services/anime.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ItemSearchService } from './services/item-search.service';
 import { UserService } from './services/user.service';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { UserService } from './services/user.service';
     DashboardComponent,
     LoginComponent,
     RegistrationComponent,
-    AnimeDetailComponent
+    AnimeDetailComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

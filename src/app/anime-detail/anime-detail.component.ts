@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+//Models
+import { Anime } from '../models/anime';
+import { AnimeRating } from '../models/anime-rating';
+import { User } from '../models/user';
+
+//Services
 import { AnimeService } from '../services/anime.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-anime-detail',
@@ -10,30 +17,146 @@ import { AnimeService } from '../services/anime.service';
 })
 export class AnimeDetailComponent implements OnInit {
 
-  anime;
+  anime: Anime;
+  currentUser: User;
+  genresString: string;
+  studiosString: string;
+  myRating: AnimeRating = new AnimeRating;
   error;
+  ratingError;
+  savingError;
+  ratingLoading: boolean = false;
+  ratingSaving: boolean = false;
+  disableSubmission: boolean = true;
+  userRatingExisted: boolean = false;
+  //Can probably remove this and do it easier with a if in html
+  saveButtonText: string = 'Add';
 
-  constructor(private animeService: AnimeService, private route: ActivatedRoute) { }
+  listOptions: Array<object> = [
+      {label: '', value: ''},
+      {label: 'Watching', value: 'watching'},
+      {label: 'Plan To Watch', value: 'plan_to_watch'},
+      {label: 'Completed', value: 'completed'}
+  ];
+  // selectedList: object = {label: 'Select', value: ''};
+
+  ratingOptions: Array<object> = [
+    {label: '', value: 0},
+    {label: 1, value: 1},
+    {label: 2, value: 2},
+    {label: 3, value: 3},
+    {label: 4, value: 4},
+    {label: 5, value: 5},
+    {label: 6, value: 6},
+    {label: 7, value: 7},
+    {label: 8, value: 8},
+    {label: 9, value: 9},
+    {label: 10, value: 10}
+  ];
+
+  constructor(private animeService: AnimeService, private route: ActivatedRoute, private authenticationService: AuthenticationService) { 
+    this.authenticationService.currentUser.subscribe(x => { 
+      this.currentUser = x
+      if(this.currentUser && this.currentUser.uid) {
+        this.disableSubmission = false;
+      }
+    });
+  }
 
   ngOnInit() {
-    //this.useMockResponse();
+    // this.useMockResponse();
     this.getAnimeDetails();
 
   }
+
+  deleteRating() {
+    this.disableSubmission = true;
+    this.animeService.deleteRating(this.myRating).subscribe(
+      (data: any) => {
+        if(data.message && data.message === 'ok') {
+          this.myRating = new AnimeRating;
+          this.userRatingExisted = false;
+          this.saveButtonText = 'Add';
+        }
+      },  
+      error => this.error = error,
+      () => this.disableSubmission = false
+    );
+  }
+
 
   getAnimeDetails() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.animeService.getById(id).subscribe(
       (data: any) => {
         this.anime = data['anime'] || {};
+        const genreTitles = (this.anime.genres || []).map(genreObject => genreObject['name']);
+        this.genresString = genreTitles.join(', ') || ''; 
+        const studiosTitles = (this.anime.studios || []).map(studioObject => studioObject['name']);
+        this.studiosString = studiosTitles.join(', ') || ''; 
       },  
       error => this.error = error
     );
+
+    if(this.currentUser) {
+      this.animeService.getRating(id, this.currentUser.uid).subscribe(
+        (data: any) => {
+          this.myRating = data['rating'] || {};
+          if(data && data.rating) {
+            this.userRatingExisted = true;
+            this.saveButtonText = 'Update';
+          }
+        },  
+        error => this.ratingError = error
+      );
+    }
+  }
+
+  saveRating() {
+    this.myRating['englishTitle'] = this.anime.title_english;
+    this.myRating['malId'] = this.anime.mal_id;
+    this.myRating['title'] = this.anime.title;
+    this.myRating['totalEpisodes'] = this.anime.episodes;
+    this.myRating['userName'] = this.currentUser.uid;
+    this.ratingSaving = true;
+
+    if(this.userRatingExisted){
+      this.animeService.updateRating(this.myRating).subscribe(
+        (data: any) => {
+          //probably dont need this for update
+          this.userRatingExisted = true;
+          this.saveButtonText = 'Update';
+        },
+        error => { 
+          this.savingError = error;
+        },
+        () => {
+          this.ratingSaving = false;
+        }
+      );
+    }
+    else {
+      this.animeService.createRating(this.myRating).subscribe(
+        (data: any) => {
+          if(data.recordId) {
+            this.userRatingExisted = true;
+            this.saveButtonText = 'Update';
+            this.myRating['_id'] = data.recordId;
+          }
+            
+        },
+        error => { 
+          this.savingError = error;
+        },
+        () => {
+          this.ratingSaving = false;
+        }
+      );
+    }
   }
 
   useMockResponse(){
-    this.anime = {"request_hash":"request:anime:f2699ee2da4aa46e26b75b41e7565803b96b4297","request_cached":true,
-                  "request_cache_expiry":46037,"mal_id":9253,"url":"https://myanimelist.net/anime/9253/Steins_Gate",
+    this.anime = {"mal_id":9253,"url":"https://myanimelist.net/anime/9253/Steins_Gate",
                   "image_url":"https://cdn.myanimelist.net/images/anime/5/73199.jpg",
                   "trailer_url":"https://www.youtube.com/embed/27OZc-ku6is?enablejsapi=1&wmode=opaque&autoplay=1",
                   "title":"Steins;Gate","title_english":"Steins;Gate","title_japanese":"STEINS;GATE","title_synonyms":[],
@@ -49,6 +172,26 @@ export class AnimeDetailComponent implements OnInit {
                   "genres":[{"mal_id":41,"type":"anime","name":"Thriller","url":"https://myanimelist.net/anime/genre/41/Thriller"},{"mal_id":24,"type":"anime","name":"Sci-Fi","url":"https://myanimelist.net/anime/genre/24/Sci-Fi"}],
                   "opening_themes":["\"Hacking to the Gate\" by Kanako Itou"],"ending_themes":["\"Toki Tsukasadoru Juuni no Meiyaku (刻司ル十二ノ盟約)\" by Yui Sakakibara (eps 1-21)","\"Fake Verthandi\" by Takeshi Abo (ep 22)","\"Sky Clad no Kansokusha (スカイクラッドの観測者)\" by Kanako Itou (ep 23)","\"Another Heaven\" by Kanako Itou (ep 24)"]
                 };
+
+    const genreTitles = (this.anime.genres || []).map(genreObject => genreObject['name']);
+    this.genresString = genreTitles.join(', ') || ''; 
+    const studiosTitles = (this.anime.studios || []).map(studioObject => studioObject['name']);
+    this.studiosString = studiosTitles.join(', ') || ''; 
+    const id = +this.route.snapshot.paramMap.get('id');
+    if(this.currentUser) {
+      console.log(id, this.currentUser.uid);
+      this.animeService.getRating(id, this.currentUser.uid).subscribe(
+        (data: any) => {
+          this.myRating = data['rating'] || {};
+          if(data && data.rating) {
+            this.userRatingExisted = true;
+            this.saveButtonText = 'Update';
+            console.log(this.userRatingExisted);
+          }
+        },  
+        error => this.ratingError = error
+      );
+    }
   }
 
 }
