@@ -1,14 +1,52 @@
-<h1>{{title}}</h1>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/dashboard">{{title}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/search">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/anime">My Anime</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/books">My Books</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            <ng-container *ngIf="currentUser; else notLoggedIn">
+                <span class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" (click)="toggleUserNav()" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" [attr.aria-expanded]="userNavExpanded">
+                        {{currentUser?.uid}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" routerLink="/profile">Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" (click)="logout()">Logout</a>
+                    </div>
+                </span>
+            </ng-container>
 
-<nav>
-    <a routerLink="/dashboard">Home</a>
-    <a routerLink="/search">Search</a>
-    <a routerLink="/anime">My Anime</a>
-    <a routerLink="/books">My Books</a>
-    <a routerLink="/login">Login</a>
+            <ng-template #notLoggedIn>
+                <a routerLink="/login">Login</a>
+            </ng-template>
+        </span>
+        
+    </div>
 </nav>
 
-<button (click)="logout()">Logout</button>
+
 
 <router-outlet></router-outlet>
+
+
+<footer class="page-footer font-small bg-dark pt-4">
+    <div class="text-center pb-3">
+        Version: 1.01
+        <br>
+        Released: 05-31-2019
+    </div>
+</footer>
 

@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-// import { Anime } from '../models/anime';
- 
+import { Anime } from '../models/anime';
+import { AnimeRating } from '../models/anime-rating';
 @Injectable({
     providedIn: 'root',
 })
@@ -18,8 +18,25 @@ export class AnimeService {
 
     constructor( private http: HttpClient ) { }
 
-    getById(id: number) {
-        return this.http.get(`${this.animeUrl}/${id}`);
+    getById(id: number): Observable<Anime>{
+        return this.http.get<Anime>(`${this.animeUrl}/${id}`);
+    }
+
+    getRating(id: number, user: string): Observable<AnimeRating> {
+        return this.http.get<AnimeRating>(`${this.animeUrl}/rating/${id}/for/${user}`);
+    }
+
+    createRating(rating: AnimeRating) {
+        return this.http.post<AnimeRating>(`${this.animeUrl}/rating`, { rating });
+    }
+
+    updateRating(rating: AnimeRating) {
+        return this.http.put<AnimeRating>(`${this.animeUrl}/rating`, { rating });
+    }
+
+    deleteRating(rating: AnimeRating) {
+        const id = rating['_id'];
+        return this.http.delete(`${this.animeUrl}/rating/${id}`);
     }
 
 
