@@ -1,0 +1,25 @@
+<h3>{{title}}</h3>
+
+<ng-container *ngIf="data.length; else noData">
+  <table class="results-table">
+    <tr>
+      <th>#</th>
+      <th *ngFor="let column of columns" class="sortableColumn" (click)="sortColumn(column?.prop, column?.numeric)">
+        {{column?.label}}
+      </th>
+    </tr>
+
+    <tr *ngFor="let item of data; index as index">
+      <td>{{index+1}}</td>
+      <td *ngFor="let column of columns">
+        <a *ngIf="column?.link; else notLink" [routerLink]="['/', type, item[routerProperty]]">{{item[column?.prop]}}</a>
+        <ng-template #notLink>{{item[column?.prop]}}</ng-template>
+        
+      </td>
+    </tr>
+  </table>
+</ng-container>
+
+<ng-template #noData>
+  <div>No Items In This List</div>
+</ng-template>

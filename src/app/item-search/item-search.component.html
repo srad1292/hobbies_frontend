@@ -1,11 +1,33 @@
 <h2>Search for new items!</h2>
 
-<p>Current Item Type: {{searchType}}</p>
+<div class="row section">
+  <div class="col-sm-1">
+    Search Type: 
+  </div>
+  <div class="col-sm-2">
+    <select class="form-control" name="itemType" [(ngModel)]="searchType">
+      <option *ngFor="let option of searchTypeOptions" [value]="option">{{option}}</option>
+    </select>
+  </div>
+</div>
 
-<div>
-  Search: <input placeholder="Search" [(ngModel)]="searchValue">
-  <button [disabled]="isSearching" (click)="search()">Search</button>
-  <ng-container *ngIf="isSearching">Searching...</ng-container>
+<div class="row section">
+  <div class="col-sm-1">
+    Search: 
+  </div>
+  <div class="col-sm-2">
+    <input class="form-control" placeholder="Search" [(ngModel)]="searchValue">
+  </div>
+</div>
+
+<div class="row section">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-1">
+      <button type="button" class="btn btn-info submit-button" [disabled]="isSearching" (click)="search()">
+        <ng-container *ngIf="isSearching; else notSearching">Searching...</ng-container>
+        <ng-template #notSearching>Search</ng-template>
+      </button>    
+  </div>
 </div>
 
 <br><br>
@@ -14,11 +36,11 @@
   <h2>Search Results</h2>
   <table class="results-table">
     <tr>
-      <th *ngFor='let field of animeFields'>{{field}}</th>
+      <th *ngFor='let field of fields'>{{field}}</th>
     </tr>
 
     <tr *ngFor='let result of searchResults' (click)="goToItemDetails(result)">
-      <td *ngFor='let key of animeFields'>
+      <td *ngFor='let key of fields'>
         <ng-container *ngIf='key === synopsis; else regularFields'>
           {{result[key] | slice:0:20 }}
           <ng-container *ngIf='result[key].length > 20'>...</ng-container>

@@ -3,44 +3,44 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Anime } from '../models/anime';
-import { AnimeRating } from '../models/anime-rating';
+import { Manga } from '../models/manga';
+import { MangaRating } from '../models/manga-rating';
 @Injectable({
     providedIn: 'root',
 })
 
-export class AnimeService {
+export class MangaService {
 
     private serverData = JSON;
-    private animeData = JSON;
-    private animeUrl = 'http://127.0.0.1:8000/anime';  // URL to web api
+    private mangaData = JSON;
+    private mangaUrl = 'http://127.0.0.1:8000/manga';  // URL to web api
 
 
     constructor( private http: HttpClient ) { }
 
-    getById(id: number): Observable<Anime>{
-        return this.http.get<Anime>(`${this.animeUrl}/${id}`);
+    getById(id: number): Observable<any>{
+        return this.http.get<any>(`${this.mangaUrl}/${id}`);
     }
 
-    getRating(id: number, user: string): Observable<AnimeRating> {
-        return this.http.get<AnimeRating>(`${this.animeUrl}/rating/${id}/for/${user}`);
+    getRating(id: number, user: string): Observable<MangaRating> {
+        return this.http.get<MangaRating>(`${this.mangaUrl}/rating/${id}/for/${user}`);
     }
 
-    getAllRatings(user: string): Observable<AnimeRating[]> {
-        return this.http.get<AnimeRating[]>(`${this.animeUrl}/ratings/${user}`);
+    getAllRatings(user: string): Observable<MangaRating[]> {
+        return this.http.get<MangaRating[]>(`${this.mangaUrl}/ratings/${user}`);
     }
 
-    createRating(rating: AnimeRating) {
-        return this.http.post<AnimeRating>(`${this.animeUrl}/rating`, { rating });
+    createRating(rating: MangaRating) {
+        return this.http.post<MangaRating>(`${this.mangaUrl}/rating`, { rating });
     }
 
-    updateRating(rating: AnimeRating) {
-        return this.http.put<AnimeRating>(`${this.animeUrl}/rating`, { rating });
+    updateRating(rating: MangaRating) {
+        return this.http.put<MangaRating>(`${this.mangaUrl}/rating`, { rating });
     }
 
-    deleteRating(rating: AnimeRating) {
+    deleteRating(rating: MangaRating) {
         const id = rating['_id'];
-        return this.http.delete(`${this.animeUrl}/rating/${id}`);
+        return this.http.delete(`${this.mangaUrl}/rating/${id}`);
     }
 
 

@@ -163,75 +163,63 @@
         <div class="side-column-section">
             <p><strong>Related: </strong></p>
 
-            <div class="row" *ngIf="anime.related?.Adaptation">
+            <div class="row striped-rows" *ngIf="anime.related?.Adaptation">
                 <div class="col-sm-12">
                     Adaptation:
-                    <div class="row" *ngFor="let adaptation of anime.related?.Adaptation">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-3">Type</div>
-                                <div class="col-sm-3">Name</div>
-                                <div class="col-sm-3">Hobby Tracker Link</div>
-                                <div class="col-sm-3">MAL Link</div>
-                            </div>
-                            <div class="row" *ngFor="let adaptation of anime.related?.Adaptation">
-                                <div class="col-sm-3">{{adaptation.type}}</div>
-                                <div class="col-sm-3">{{adaptation.name}}</div>
-                                <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
-                                <div class="col-sm-3"><a [routerLink]="['/anime', adaptation.mal_id]">Anime Details</a></div> 
-
-                                <div class="col-sm-3"><a [href]="adaptation.url" target="_blank">MyAnimeList</a></div>
-                            </div>
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
                         </div>
-                    </div>
+                        <div class="row" *ngFor="let adaptation of anime.related?.Adaptation">
+                            <div class="col-sm-3">{{adaptation.type}}</div>
+                            <div class="col-sm-3">{{adaptation.name}}</div>
+                            <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                            <div class="col-sm-3"><a [routerLink]="['/anime', adaptation.mal_id]">Anime Details</a></div> 
+
+                            <div class="col-sm-3"><a [href]="adaptation.url" target="_blank">MyAnimeList</a></div>
+                        </div>
                 </div>
             </div>
 
-            <div class="row" *ngIf="anime.related?.Prequel">
+            <div class="row striped-rows" *ngIf="anime.related?.Prequel">
                 <div class="col-sm-12">
                     Prequel:
-                    <div class="row" *ngFor="let prequel of anime.related?.Prequel">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-3">Type</div>
-                                <div class="col-sm-3">Name</div>
-                                <div class="col-sm-3">Hobby Tracker Link</div>
-                                <div class="col-sm-3">MAL Link</div>
-                            </div>
-                            <div class="row" *ngFor="let prequel of anime.related?.Prequel">
-                                <div class="col-sm-3">{{prequel.type}}</div>
-                                <div class="col-sm-3">{{prequel.name}}</div>
-                                <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
-                                <div class="col-sm-3"><a [routerLink]="['/anime', prequel.mal_id]">Anime Details</a></div> 
-
-                                <div class="col-sm-3"><a [href]="prequel.url" target="_blank">MyAnimeList</a></div>
-                            </div>
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
                         </div>
-                    </div>
+                        <div class="row" *ngFor="let prequel of anime.related?.Prequel">
+                            <div class="col-sm-3">{{prequel.type}}</div>
+                            <div class="col-sm-3">{{prequel.name}}</div>
+                            <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                            <div class="col-sm-3"><a [routerLink]="['/anime', prequel.mal_id]">Anime Details</a></div> 
+
+                            <div class="col-sm-3"><a [href]="prequel.url" target="_blank">MyAnimeList</a></div>
+                        </div>
                 </div>
             </div>
 
-            <div class="row" *ngIf="anime.related?.Sequel">
+            <div class="row striped-rows" *ngIf="anime.related?.Sequel">
                 <div class="col-sm-12">
                     Sequel:
-                    <div class="row" *ngFor="let sequel of anime.related?.Sequel">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-3">Type</div>
-                                <div class="col-sm-3">Name</div>
-                                <div class="col-sm-3">Hobby Tracker Link</div>
-                                <div class="col-sm-3">MAL Link</div>
-                            </div>
-                            <div class="row" *ngFor="let sequel of anime.related?.Sequel">
-                                <div class="col-sm-3">{{sequel.type}}</div>
-                                <div class="col-sm-3">{{sequel.name}}</div>
-                                <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
-                                <div class="col-sm-3"><a [routerLink]="['/anime', sequel.mal_id]">Anime Details</a></div> 
-
-                                <div class="col-sm-3"><a [href]="sequel.url" target="_blank">MyAnimeList</a></div>
-                            </div>
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
                         </div>
-                    </div>
+                        <div class="row" *ngFor="let sequel of anime.related?.Sequel">
+                            <div class="col-sm-3">{{sequel.type}}</div>
+                            <div class="col-sm-3">{{sequel.name}}</div>
+                            <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                            <div class="col-sm-3"><a [routerLink]="['/anime', sequel.mal_id]">Anime Details</a></div> 
+
+                            <div class="col-sm-3"><a [href]="sequel.url" target="_blank">MyAnimeList</a></div>
+                        </div>
                 </div>
             </div>
         </div>
