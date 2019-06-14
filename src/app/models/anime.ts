@@ -8,11 +8,10 @@ export class Anime {
     ending_themes: Array<string>;    
     episodes: number;
     favorites: number;  
-    genres: Array<object>;      
-    mal_id: number;
-    url: string;
+    genres: Array<object>;         
     image_url: string;
-    licensors: Array<object>;    
+    licensors: Array<object>;   
+    mal_id: number;     
     members: number;  
     opening_themes: Array<string>;    
     popularity: number;   
@@ -33,6 +32,7 @@ export class Anime {
     title_synonyms: Array<string>;
     trailer_url: string;    
     type: string;
+    url: string;
 }
 
 /**Sample response until I create models for nested data */

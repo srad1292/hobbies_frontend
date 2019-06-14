@@ -16,6 +16,24 @@ footer {
 .no-bottom {
     margin-bottom: 1px;
 }
+
+.striped-rows {
+    .row {
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+    }
+    .row:nth-child(odd) {
+        background-color: lightgray;
+    }
+    .row:nth-child(even) {
+        background-color: white;
+    }
+    .row:first-child{
+        border-top: 1px solid black;
+        padding-bottom: 6px;
+    }
+}
 // nav {
 //     margin-bottom: 8px;
 //     a {
@@ -73,6 +91,17 @@ footer {
         background-color: #4CAF50;
         color: white;
       }
+}
+
+.table-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.sortableColumn {
+    &:hover {
+        background-color: #1C5F10;
+    }
 }
 
 //Spacing Rules

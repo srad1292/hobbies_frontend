@@ -3,15 +3,15 @@
 </div>
 
 <ng-template #doneLoading>
-  <div class="row table-container" *ngIf="watchingList">
+  <div class="row table-container">
     <div class="col-sm-12">
-      <app-list-table [columns]="columns" [data]="watchingList" 
-        [routerProperty]="routerProperty" title="Currently Watching" [type]="type">
+      <app-list-table [columns]="columns" [data]="readingList" 
+        [routerProperty]="routerProperty" title="Currently Reading" [type]="type">
       </app-list-table>
     </div>
   </div>
 
-  <div class="row table-container" *ngIf="completedList">
+  <div class="row table-container">
     <div class="col-sm-12">
       <app-list-table [columns]="columns" [data]="completedList" 
         [routerProperty]="routerProperty" title="Completed" [type]="type">
@@ -19,10 +19,10 @@
     </div>
   </div>
 
-  <div class="row table-container" *ngIf="planToList" >
+  <div class="row table-container">
     <div class="col-sm-12">
       <app-list-table [columns]="columns" [data]="planToList" 
-        [routerProperty]="routerProperty" title="Plan To Watch" [type]="type">
+        [routerProperty]="routerProperty" title="Plan To Read" [type]="type">
       </app-list-table>
     </div>
   </div>

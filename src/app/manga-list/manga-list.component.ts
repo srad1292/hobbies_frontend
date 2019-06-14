@@ -2,26 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 //Models
-import { Anime } from '../models/anime';
-import { AnimeRating } from '../models/anime-rating';
+import { Manga } from '../models/manga';
+import { MangaRating } from '../models/manga-rating';
 import { User } from '../models/user';
 
 //Services
-import { AnimeService } from '../services/anime.service';
+import { MangaService } from '../services/manga.service';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
-  selector: 'app-anime-list',
-  templateUrl: './anime-list.component.html',
-  styleUrls: ['./anime-list.component.scss']
+  selector: 'app-manga-list',
+  templateUrl: './manga-list.component.html',
+  styleUrls: ['./manga-list.component.scss']
 })
-export class AnimeListComponent implements OnInit {
+export class MangaListComponent implements OnInit {
 
   currentUser: User;
   routeUsername: string;
-  completedList: AnimeRating[];
-  planToList: AnimeRating[];
-  watchingList: AnimeRating[];
+  completedList: MangaRating[];
+  planToList: MangaRating[];
+  readingList: MangaRating[];
   
   error;
 
@@ -31,14 +31,15 @@ export class AnimeListComponent implements OnInit {
   columns: object[] = [
     {label: 'Title', prop: 'title', numeric: false, link: true},
     {label: 'Rating', prop: 'rating', numeric: true},
-    {label: 'Episodes Watched', prop: 'episodesSeen', numeric: true}
+    {label: 'Chapters Read', prop: 'chaptersRead', numeric: true},
+    {label: 'Volumes Read', prop: 'volumesRead', numeric: true}
   ];
 
-  type: string = 'anime';
+  type: string = 'manga';
 
   routerProperty: string = 'malId';
 
-  constructor(private animeService: AnimeService, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) { 
+  constructor(private mangaService: MangaService, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) { 
     if (!this.authenticationService.currentUserValue) { 
       this.router.navigate(['/login']);
     }
@@ -61,12 +62,12 @@ export class AnimeListComponent implements OnInit {
 
   getUserRatings() {
     this.ratingsLoading = true;
-    this.animeService.getAllRatings(this.routeUsername).subscribe(
+    this.mangaService.getAllRatings(this.routeUsername).subscribe(
       (data) => {
         if(data['ratings']) {
           this.completedList = data['ratings'].filter(rating => rating.list === 'completed');
-          this.planToList = data['ratings'].filter(rating => rating.list === 'plan_to_watch');
-          this.watchingList = data['ratings'].filter(rating => rating.list === 'watching');
+          this.planToList = data['ratings'].filter(rating => rating.list === 'plan_to_read');
+          this.readingList = data['ratings'].filter(rating => rating.list === 'reading');
         }
       },
       error => this.error = error,
@@ -74,4 +75,5 @@ export class AnimeListComponent implements OnInit {
 
     );
   }
+
 }

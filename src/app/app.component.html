@@ -9,10 +9,13 @@
                 <a class="nav-link" routerLink="/search">Search</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/anime">My Anime</a>
+                <a class="nav-link" [routerLink]="['/anime-list', currentUser?.uid]">My Anime</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/books">My Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/manga-list', currentUser?.uid]">My Manga</a>
             </li>
         </ul>
         <span class="navbar-text">
@@ -44,9 +47,9 @@
 
 <footer class="page-footer font-small bg-dark pt-4">
     <div class="text-center pb-3">
-        Version: 1.01
+        Version: 1.02
         <br>
-        Released: 05-31-2019
+        Released: 06-14-2019
     </div>
 </footer>
 

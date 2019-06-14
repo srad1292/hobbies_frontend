@@ -20,8 +20,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AnimeService } from './services/anime.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ItemSearchService } from './services/item-search.service';
+import { MangaService } from './services/manga.service';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
+import { ListTableComponent } from './shared/components/list-table/list-table.component';
+import { MangaDetailsComponent } from './manga-details/manga-details.component';
+import { MangaListComponent } from './manga-list/manga-list.component';
 
 
 @NgModule({
@@ -34,7 +38,10 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     RegistrationComponent,
     AnimeDetailComponent,
-    ProfileComponent
+    ProfileComponent,
+    ListTableComponent,
+    MangaDetailsComponent,
+    MangaListComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +49,7 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [AnimeService, AuthenticationService, ItemSearchService , UserService],
+  providers: [AnimeService, AuthenticationService, ItemSearchService, MangaService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

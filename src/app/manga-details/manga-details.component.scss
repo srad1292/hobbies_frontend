@@ -1,0 +1,38 @@
+select {
+    min-width: 20px;
+}
+
+img {
+    width: 100%;
+}
+
+.title-row {
+    border-bottom: 1px solid gray;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.body-row {
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.side-column {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+
+.side-column-section {
+    border-top: solid 1px black;
+    margin-top: 12px;
+}
+
+.submit-button{
+    width: 100%;
+    // margin-left: 10%
+}
+
+#main-title {
+    padding-left: 2rem;
+}

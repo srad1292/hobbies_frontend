@@ -1,0 +1,255 @@
+<ng-container *ngIf="manga">
+
+    <div class="row title-row">
+        <h2 id="main-title">{{manga.title}}</h2>
+    </div>
+    
+    <div class="row body-row">
+        <div class="col-sm-2 side-column">
+            <div class="row">
+                <div class="col-sm-12">
+                    <img [src]="manga.image_url">
+                </div>
+            </div>
+    
+            <div class="side-column-section">
+                <p>
+                    <strong>Titles</strong>
+                </p>
+    
+                <p class="no-bottom"><strong>English:</strong> {{manga.title_english}}</p>
+    
+                <p ><strong>Japanese:</strong> {{manga.title_japanese}}</p>
+    
+            </div>
+    
+            <div class="side-column-section">
+                    <p>
+                        <strong>Information</strong>
+                    </p>
+        
+                    <p class="no-bottom"><strong>Type:</strong> {{manga.type}}</p>
+                    <p class="no-bottom"><strong>Volumes:</strong> {{manga.volumes}}</p>
+                    <p class="no-bottom"><strong>Chapters:</strong> {{manga.chapters}}</p>
+                    <p class="no-bottom"><strong>Rating:</strong> {{manga.rating}}</p>
+                    <p class="no-bottom"><strong>Genres:</strong> {{genresString}}</p>
+                    <p class="no-bottom"><strong>Status:</strong> {{manga.status}}</p>
+                    <p class="no-bottom"><strong>Published:</strong> {{manga.published?.string}}</p>
+                    <p><strong>Authors:</strong> {{authorsString}}</p>
+        
+            </div>
+    
+            <div class="side-column-section">
+                    <p>
+                        <strong>Links</strong>
+                    </p>
+            
+                    <a [href]="manga.url" target="_blank">MyAnimeList</a>
+            </div>
+        </div>
+    
+        <div class="col-sm-10">
+    
+            <div>
+                <ng-container *ngIf="ratingLoading === false; else loadingRating">
+                    <p>
+                        <strong>Your Details: </strong>
+                        <ng-container *ngIf="!myRating" class="error-message">You Have Not Added This To Your List</ng-container>
+                    </p>
+    
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <strong>List:</strong>
+                            <select class="form-control" name="list" [(ngModel)]="myRating.list">
+                                <option *ngFor="let listOption of listOptions" [value]="listOption.value">{{listOption.label}}</option>
+                            </select>
+                            
+                        </div>
+        
+                        <div class="col-sm-3">
+                            <strong>Rating:</strong>
+                            <select class="form-control" name="rating" [(ngModel)]="myRating.rating">
+                                <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption.value">{{ratingOption.label}}</option>
+                            </select>
+                        </div>
+        
+                        <div class="col-sm-3">
+                            <strong>Volumes Read (/{{manga.volumes}}):</strong> 
+                            <input class="form-control" name="volumes-read" [(ngModel)]="myRating.volumesRead"> 
+                        </div>
+
+                        <div class="col-sm-3">
+                            <strong>Chapters Read (/{{manga.chapters}}):</strong> 
+                            <input class="form-control" name="chapters-read" [(ngModel)]="myRating.chaptersRead"> 
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <strong>Date Added:</strong>
+                            <input class="form-control" name="episodes-seen" type="date" [(ngModel)]="myRating.dateAdded">
+                        </div>
+    
+                        <div class="col-sm-3">
+                            <strong>Date Started:</strong>
+                            <input class="form-control" name="episodes-seen" type="date" [(ngModel)]="myRating.dateStarted">    
+                        </div>
+    
+                        <div class="col-sm-3">
+                            <strong>Date Completed:</strong>
+                            <input class="form-control" name="episodes-seen" type="date" [(ngModel)]="myRating.dateCompleted">
+                        </div>
+                    </div>
+    
+                    <div class="row top-margin-5">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-1">
+                            <ng-container *ngIf="!ratingSaving; else currentlySaving">
+                                <button type="button" class="btn btn-info submit-button" (click)="saveRating()" [disabled]="disableSubmission">{{saveButtonText}}</button>
+                            </ng-container>
+                            <ng-template #currentlySaving>
+                                <button type="button" class="btn btn-info submit-button" disabled>Saving...</button>
+                            </ng-template>
+                        </div>
+    
+                        <div class="col-sm-1">
+                            <ng-container *ngIf="myRating">
+                                <button type="button" class="btn btn-info submit-button" (click)="deleteRating()" [disabled]="disableSubmission">Remove</button>
+                            </ng-container>
+                        </div>
+    
+                        <div class="col-sm-2 error-message" *ngIf="savingError">
+                            {{savingError}}
+                        </div>
+                    </div>
+                </ng-container>
+                
+                <ng-template #loadingRating>
+                    <h1>Loading...</h1>
+                </ng-template>
+    
+            </div>
+    
+            <div class="side-column-section">
+                <p><strong>MyAnimeList Details</strong></p>
+                
+                <div class="row">
+                    <div class="col-sm-2">
+                        <strong>Score:</strong> {{manga.score}}
+                        <br>
+                        ({{manga.scored_by}}) 
+                    </div>
+    
+                    <div class="col-sm-2">
+                        <strong>Rank:</strong> {{manga.rank}}
+                    </div>
+    
+                    <div class="col-sm-2">
+                        <strong>Popularity:</strong> {{manga.popularity}}
+                    </div>
+    
+                </div>
+            </div>
+    
+            <div class="side-column-section">
+                <p><strong>Synopsis: </strong></p>
+    
+                <p>{{manga.synopsis}}</p>
+            </div>
+    
+            <div class="side-column-section">
+                <p><strong>Background: </strong></p>
+    
+                <p>{{manga.background}}</p>
+            </div>
+    
+            <div class="side-column-section">
+                <p><strong>Related: </strong></p>
+    
+                <div class="row striped-rows" *ngIf="manga.related?.Adaptation">
+                    <div class="col-sm-12">
+                        Adaptation:
+
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
+                        </div>
+                        
+                        <div class="row" *ngFor="let adaptation of manga.related?.Adaptation">
+                            <div class="col-sm-3">{{adaptation.type}}</div>
+                            <div class="col-sm-3">{{adaptation.name}}</div>
+                            <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                            <div class="col-sm-3"><a [routerLink]="['/manga', adaptation.mal_id]">Manga Details</a></div> 
+
+                            <div class="col-sm-3"><a [href]="adaptation.url" target="_blank">MyAnimeList</a></div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row striped-rows" *ngIf="manga.related?.Prequel">
+                    <div class="col-sm-12">
+                        Prequel:
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
+                        </div>
+                            <div class="row" *ngFor="let prequel of manga.related?.Prequel">
+                                <div class="col-sm-3">{{prequel.type}}</div>
+                                <div class="col-sm-3">{{prequel.name}}</div>
+                                <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                                <div class="col-sm-3"><a [routerLink]="['/manga', prequel.mal_id]">Manga Details</a></div> 
+
+                                <div class="col-sm-3"><a [href]="prequel.url" target="_blank">MyAnimeList</a></div>
+                            </div>
+                    </div>
+                </div>
+    
+                <div class="row striped-rows" *ngIf="manga.related?.Sequel">
+                    <div class="col-sm-12">
+                        Sequel:
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
+                        </div>
+                            <div class="row" *ngFor="let sequel of manga.related?.Sequel">
+                                <div class="col-sm-3">{{sequel.type}}</div>
+                                <div class="col-sm-3">{{sequel.name}}</div>
+                                <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                                <div class="col-sm-3"><a [routerLink]="['/manga', sequel.mal_id]">Manga Details</a></div> 
+
+                                <div class="col-sm-3"><a [href]="sequel.url" target="_blank">MyAnimeList</a></div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="manga.related?.side_story">
+                    <div class="col-sm-12">
+                        Side Stories:
+                        <div class="row">
+                            <div class="col-sm-3">Type</div>
+                            <div class="col-sm-3">Name</div>
+                            <div class="col-sm-3">Hobby Tracker Link</div>
+                            <div class="col-sm-3">MAL Link</div>
+                        </div>
+                            <div class="row" *ngFor="let story of manga.related?.side_story">
+                                <div class="col-sm-3">{{story.type}}</div>
+                                <div class="col-sm-3">{{story.name}}</div>
+                                <!-- The hobby route is going to have to depends on the type soo will have to come back later -->
+                                <div class="col-sm-3"><a [routerLink]="['/manga', story.mal_id]">Manga Details</a></div> 
+                                <div class="col-sm-3"><a [href]="story.url" target="_blank">MyAnimeList</a></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+    </div>
+    </ng-container>
+    
