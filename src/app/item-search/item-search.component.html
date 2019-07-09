@@ -36,10 +36,12 @@
   <h2>Search Results</h2>
   <table class="results-table">
     <tr>
+      <th> # </th>
       <th *ngFor='let field of fields'>{{field}}</th>
     </tr>
 
-    <tr *ngFor='let result of searchResults' (click)="goToItemDetails(result)">
+    <tr *ngFor='let result of searchResults; index as index' (click)="goToItemDetails(result)">
+      <td>{{index+1}}</td>
       <td *ngFor='let key of fields'>
         <ng-container *ngIf='key === synopsis; else regularFields'>
           {{result[key] | slice:0:20 }}

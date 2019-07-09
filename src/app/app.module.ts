@@ -7,10 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
 import { AnimeListComponent } from './anime-list/anime-list.component';
+import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ItemSearchComponent } from './item-search/item-search.component';
+import { ListTableComponent } from './shared/components/list-table/list-table.component';
 import { LoginComponent } from './login/login.component';
+import { MangaDetailsComponent } from './manga-details/manga-details.component';
+import { MangaListComponent } from './manga-list/manga-list.component';
+import { ProfileComponent } from './profile/profile.component';
 import { RegistrationComponent } from './registration/registration.component';
 
 //Modules
@@ -19,29 +24,27 @@ import { AppRoutingModule } from './app-routing.module';
 //Services
 import { AnimeService } from './services/anime.service';
 import { AuthenticationService } from './services/authentication.service';
+import { BookService } from './services/book.service';
 import { ItemSearchService } from './services/item-search.service';
 import { MangaService } from './services/manga.service';
 import { UserService } from './services/user.service';
-import { ProfileComponent } from './profile/profile.component';
-import { ListTableComponent } from './shared/components/list-table/list-table.component';
-import { MangaDetailsComponent } from './manga-details/manga-details.component';
-import { MangaListComponent } from './manga-list/manga-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemSearchComponent,
+    AnimeDetailComponent,    
     AnimeListComponent,
+    BookDetailComponent,    
     BookListComponent,
     DashboardComponent,
-    LoginComponent,
-    RegistrationComponent,
-    AnimeDetailComponent,
-    ProfileComponent,
+    ItemSearchComponent,    
     ListTableComponent,
+    LoginComponent,
     MangaDetailsComponent,
-    MangaListComponent
+    MangaListComponent,
+    ProfileComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { MangaListComponent } from './manga-list/manga-list.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [AnimeService, AuthenticationService, ItemSearchService, MangaService, UserService],
+  providers: [AnimeService, AuthenticationService, BookService, ItemSearchService, MangaService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
