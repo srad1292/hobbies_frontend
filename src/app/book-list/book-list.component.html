@@ -1,3 +1,30 @@
-<p>
-  book-list works!
-</p>
+<div *ngIf="ratingsLoading; else doneLoading">
+    Loading...
+  </div>
+  
+  <ng-template #doneLoading>
+    <div class="row table-container" *ngIf="readingList">
+      <div class="col-sm-12">
+        <app-list-table [columns]="columns" [data]="readingList" 
+          [routerProperty]="routerProperty" title="Currently Reading" [type]="type">
+        </app-list-table>
+      </div>
+    </div>
+  
+    <div class="row table-container" *ngIf="completedList">
+      <div class="col-sm-12">
+        <app-list-table [columns]="columns" [data]="completedList" 
+          [routerProperty]="routerProperty" title="Read" [type]="type">
+        </app-list-table>
+      </div>
+    </div>
+  
+    <div class="row table-container" *ngIf="planToList" >
+      <div class="col-sm-12">
+        <app-list-table [columns]="columns" [data]="planToList" 
+          [routerProperty]="routerProperty" title="Plan To Read" [type]="type">
+        </app-list-table>
+      </div>
+    </div>
+  </ng-template>
+  

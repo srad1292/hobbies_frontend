@@ -1,0 +1,174 @@
+<ng-container *ngIf="book">
+
+    <div class="row title-row">
+        <h2 id="main-title">{{book.title}}</h2>
+    </div>
+    
+    <div class="row body-row">
+        <div class="col-sm-2 side-column">
+            <div class="row">
+                <div class="col-sm-12">
+                    <img [src]="book.image_url">
+                </div>
+            </div>
+    
+            <div class="side-column-section">
+                <p>
+                    <strong>Authors</strong>
+                </p>
+                
+                <ng-container *ngIf="book.authors">
+                  <p *ngFor="let author of book.authors">
+                    {{author.name}} <ng-container *ngIf="author.role">({{author.role}})</ng-container>
+                  </p>  
+                </ng-container>
+            </div>
+    
+            <div class="side-column-section">
+                    <p>
+                        <strong>Information</strong>
+                    </p>
+        
+                    <p class="no-bottom"><strong>ISBN:</strong> {{book.isbn}}</p>
+                    <p class="no-bottom"><strong>Pages:</strong> {{book.num_pages}}</p>        
+                    <p class="no-bottom"><strong>Publication Year:</strong> {{book.publication_year}}</p>
+                    <p class="no-bottom"><strong>Publishers:</strong> {{book.publisher}}</p>
+            </div>
+    
+            <div class="side-column-section">
+                    <p>
+                        <strong>Links</strong>
+                    </p>
+            
+                    <a [href]="book.url" target="_blank">GoodReads</a>
+            </div>
+        </div>
+    
+        <div class="col-sm-10">
+    
+            <div>
+                <ng-container *ngIf="ratingLoading === false; else loadingRating">
+                    <p>
+                        <strong>Your Details: </strong>
+                        <ng-container *ngIf="!myRating" class="error-message">You Have Not Added This To Your List</ng-container>
+                    </p>
+    
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <strong>List:</strong>
+                            <select class="form-control" name="list" [(ngModel)]="myRating.list">
+                                <option *ngFor="let listOption of listOptions" [value]="listOption.value">{{listOption.label}}</option>
+                            </select>
+                            
+                        </div>
+        
+                        <div class="col-sm-3">
+                            <strong>Rating:</strong>
+                            <select class="form-control" name="rating" [(ngModel)]="myRating.rating">
+                                <option *ngFor="let ratingOption of ratingOptions" [value]="ratingOption.value">{{ratingOption.label}}</option>
+                            </select>
+                        </div>
+        
+                        <div class="col-sm-3">
+                            <strong>Pages Read (/{{book.num_pages}}):</strong> 
+                            <input class="form-control" name="pages-read" [(ngModel)]="myRating.pagesRead">
+                            
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <strong>Date Added:</strong>
+                            <input class="form-control" name="date-added" type="date" [(ngModel)]="myRating.dateAdded">
+                        </div>
+    
+                        <div class="col-sm-3">
+                            <strong>Date Started:</strong>
+                            <input class="form-control" name="date-started" type="date" [(ngModel)]="myRating.dateStarted">    
+                        </div>
+    
+                        <div class="col-sm-3">
+                            <strong>Date Completed:</strong>
+                            <input class="form-control" name="date-completed" type="date" [(ngModel)]="myRating.dateCompleted">
+                        </div>
+                    </div>
+    
+                    <div class="row top-margin-5">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-1">
+                            <ng-container *ngIf="!ratingSaving; else currentlySaving">
+                                <button type="button" class="btn btn-info submit-button" (click)="saveRating()" [disabled]="disableSubmission">{{saveButtonText}}</button>
+                            </ng-container>
+                            <ng-template #currentlySaving>
+                                <button type="button" class="btn btn-info submit-button" disabled>Saving...</button>
+                            </ng-template>
+                        </div>
+    
+                        <div class="col-sm-1">
+                            <ng-container *ngIf="myRating">
+                                <button type="button" class="btn btn-info submit-button" (click)="deleteRating()" [disabled]="disableSubmission">Remove</button>
+                            </ng-container>
+                        </div>
+    
+                        <div class="col-sm-2 error-message" *ngIf="savingError">
+                            {{savingError}}
+                        </div>
+                    </div>
+                </ng-container>
+                
+                <ng-template #loadingRating>
+                    <h1>Loading...</h1>
+                </ng-template>
+    
+            </div>
+    
+            <div class="side-column-section">
+                <p><strong>GoodReads Details</strong></p>
+                
+                <div class="row">
+                    <div class="col-sm-2">
+                        <strong>Score:</strong> {{book.average_rating}}
+                        <br>
+                        ({{book.ratings_count}}) 
+                    </div>  
+                </div>
+            </div>
+    
+            <div class="side-column-section">
+                <p><strong>Synopsis: </strong></p>
+    
+                <p>{{book.description}}</p>
+            </div>
+    
+    
+            <div class="side-column-section"  *ngIf="book.similar_books">
+                <p><strong>Similar Books: </strong></p>
+    
+                <div class="row striped-rows">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">Title</div>
+                            <div class="col-sm-3">Authors</div>
+                            <div class="col-sm-3">Publication Year</div>
+                            <div class="col-sm-3">Average Rating</div>
+                        </div>
+                        <div class="row" *ngFor="let similar of book.similar_books">
+                            <div class="col-sm-3"><a [routerLink]="['/book', similar.id]">{{similar.title}}</a></div>
+                            <div class="col-sm-3">
+                                <ng-container *ngFor="let author of similar.authors">
+                                    {{author.name}} <ng-container *ngIf="author.role">({{author.role}})</ng-container>
+                                    <br>
+                                </ng-container> 
+                            </div>
+                            <div class="col-sm-3">{{similar.publication_year}}</div> 
+                            <div class="col-sm-3">{{similar.average_rating}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+    </div>
+    </ng-container>
+    
