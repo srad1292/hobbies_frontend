@@ -15,6 +15,8 @@ import { ListTableComponent } from './shared/components/list-table/list-table.co
 import { LoginComponent } from './login/login.component';
 import { MangaDetailsComponent } from './manga-details/manga-details.component';
 import { MangaListComponent } from './manga-list/manga-list.component';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistrationComponent } from './registration/registration.component';
 
@@ -27,7 +29,9 @@ import { AuthenticationService } from './services/authentication.service';
 import { BookService } from './services/book.service';
 import { ItemSearchService } from './services/item-search.service';
 import { MangaService } from './services/manga.service';
+import { MovieService } from './services/movie.service';
 import { UserService } from './services/user.service';
+
 
 
 @NgModule({
@@ -43,8 +47,11 @@ import { UserService } from './services/user.service';
     LoginComponent,
     MangaDetailsComponent,
     MangaListComponent,
+    MovieDetailComponent,
+    MovieListComponent,
     ProfileComponent,
     RegistrationComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,7 @@ import { UserService } from './services/user.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [AnimeService, AuthenticationService, BookService, ItemSearchService, MangaService, UserService],
+  providers: [AnimeService, AuthenticationService, BookService, ItemSearchService, MangaService, MovieService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

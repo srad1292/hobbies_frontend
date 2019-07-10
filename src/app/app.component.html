@@ -17,6 +17,9 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/manga-list', currentUser?.uid]">My Manga</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/movie-list', currentUser?.uid]">My Movies</a>
+            </li>
         </ul>
         <span class="navbar-text">
             <ng-container *ngIf="currentUser; else notLoggedIn">
