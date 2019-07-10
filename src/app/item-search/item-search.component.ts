@@ -18,11 +18,12 @@ export class ItemSearchComponent implements OnInit {
   animeFields: string[] = ['title', 'synopsis', 'episodes', 'score', 'start_date', 'end_date'];
   mangaFields: string[] = ['title', 'synopsis', 'volumes', 'chapters', 'score', 'start_date', 'end_date'];
   bookFields: string[] = ['title', 'author', 'pub_year'];
+  movieFields: string[] = ['title', 'overview', 'release_date'];
   fields: string[];
 
   searchResults: any[];
 
-  searchTypeOptions: string[] = ['Anime', 'Books', 'Manga'];
+  searchTypeOptions: string[] = ['Anime', 'Books', 'Manga', 'Movie'];
   
   constructor(private itemSearchService: ItemSearchService, private router: Router) { }
 
@@ -42,6 +43,10 @@ export class ItemSearchComponent implements OnInit {
       case 'Manga':
         let mangaId = item.mal_id;
         this.router.navigate([`/manga/${mangaId}`]);
+        break;
+      case 'Movie':
+        let movieId = item.id;
+        this.router.navigate([`/movie/${movieId}`]);
         break;
       default:
         break;
@@ -70,6 +75,9 @@ export class ItemSearchComponent implements OnInit {
         break;
       case 'Manga':
         this.fields = this.mangaFields;
+        break;
+      case 'Movie':
+        this.fields = this.movieFields;
         break;
       default:
         break;
